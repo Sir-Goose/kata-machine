@@ -13,7 +13,7 @@ export default class DoublyLinkedList<T> {
     constructor() {
         this.length = 0;
         this.head = undefined;
-        this.tail= undefined;
+        this.tail = undefined;
     }
 
     prepend(item: T): void {
@@ -48,19 +48,19 @@ export default class DoublyLinkedList<T> {
         }
 
         curr = curr as Node<T>;
-        const node = {value: item} as Node<T>;
+        const node = { value: item } as Node<T>;
 
         node.next = curr;
         node.prev = curr.prev;
         curr.prev = node;
-        
+
         if (curr.prev) {
             curr.prev.next = curr;
         }
     }
     append(item: T): void {
         this.length++;
-        const node = {value: item} as Node<T>;
+        const node = { value: item } as Node<T>;
         if (!this.tail) {
             this.head = this.tail = node;
             return;
@@ -79,7 +79,7 @@ export default class DoublyLinkedList<T> {
             }
             curr = curr.next;
 
-            
+
         }
         if (!curr) {
             return;
@@ -115,13 +115,43 @@ export default class DoublyLinkedList<T> {
     get(idx: number): T | undefined {
         const node = this.getAt(idx);
 
+        return node?.value;
 
     }
     removeAt(idx: number): T | undefined {
+        if (idx < 0 || idx >= this.length) {
+            return;
+        }
 
+        this.length--;
+
+        const node = this.getAt(idx);
+
+        if (node === this.head) {
+            this.head = node.next;
+        } else {
+            node.prev?.next = node.next;
+        }
+
+        if (node === this.tail) {
+            this.tail = node.prev;
+        } else {
+            node.next?.prev = node.prev;
+        }
+
+        node.prev = node.next = undefined;
+        return node.value;
     }
 
     private getAt(idx: number) {
+        if (idx < 0 || idx >= this.length) {
+            return;
+        }
 
+        let curr = this.head;
+        for (let i = 0; i < idx; i++) {
+            curr = curr?.next;
+        }
+        return curr;
     }
 }

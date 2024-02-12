@@ -10,7 +10,6 @@ function walk(maze: string[], wall: string, curr: Point, end: Point, seen: boole
 
     if (curr.x < 0 || curr.x >= maze[0].length ||
         curr.y < 0 || curr.y >= maze.length) {
-
         return false;
     }
 
@@ -44,7 +43,7 @@ function walk(maze: string[], wall: string, curr: Point, end: Point, seen: boole
     }
 
     path.pop();
-
+    walk()
     return false;
 }
 
